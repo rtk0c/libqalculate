@@ -13,7 +13,9 @@ endif
 qalc_sources = files([
   'qalc.cc',
 ])
-qalc = executable('qalc', qalc_sources,
+
+qalc = executable('qalc',
+  sources : qalc_sources,
   # For the #include "support.h"
   include_directories : [incdir_libqalculate],
   cpp_args : qalc_defines + [
