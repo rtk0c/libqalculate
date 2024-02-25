@@ -416,9 +416,9 @@ void fix_to_struct2(MathStructure &m) {
 		if(m.size() == 1) m.setToChild(1);
 	}
 }
-MathStructure Calculator::convert(const MathStructure &mstruct, Unit *to_unit, const EvaluationOptions &eo, bool always_convert, bool convert_to_mixed_units) {
-	return convert(mstruct, to_unit, eo, always_convert, convert_to_mixed_units, false, NULL);
-}
+// MathStructure Calculator::convert(const MathStructure &mstruct, Unit *to_unit, const EvaluationOptions &eo, bool always_convert, bool convert_to_mixed_units) {
+// 	return convert(mstruct, to_unit, eo, always_convert, convert_to_mixed_units, false, NULL);
+// }
 Unit *find_ounce(const MathStructure &m) {
 	if(m.isUnit() && m.unit()->referenceName() == "oz") return m.unit();
 	for(size_t i = 0; i < m.size(); i++) {
