@@ -15,17 +15,14 @@
 #define RESET "\x1B[0m"
 
 void print_usage() {
-	puts("Usage: ./src/unittest [filename]");
-	puts("If filename is omitted, it will run all unit tests");
+	puts("Usage: ./unittest [filename]");
+	puts("       ./unittest [qalc executable] [.batch files folder]");
+	puts("If the first variant is used, qalc is assumed to be at ./unittest");
 }
 
-void run_unit_test(char *filename) {
+void run_unit_test(const char *qalcExe, const char *filename) {
 	char buffer[1000];
-#ifdef _WIN32
-	snprintf(buffer, 1000, "src\\qalc.exe --test-file=\"%s\"", filename);
-#else
-	snprintf(buffer, 1000, "src/qalc --test-file=\"%s\"", filename);
-#endif
+	snprintf(buffer, 1000, "%s --test-file=\"%s\"", qalcExe, filename);
 	int ret = system(buffer);
 	if(ret == EXIT_SUCCESS) return;
 	if(ret == -1 && ret != EXIT_FAILURE) puts(RED "Cannot start qalc!" RESET);
@@ -42,15 +39,10 @@ int ends_with(const char *str, const char *suffix) {
 
 int main(int argc, char *argv[]) {
 
-	if (argc == 1) {
+	if (argc == 3) {
 		puts("Running all unit tests\n");
-		struct stat info;
-		if(stat("./tests", &info) != 0) {
-			if(chdir("..") != 0) {
-				printf(RED "\nCannot change directory\n\n" RESET);
-			}
-		}
-		char path[] = "./tests";
+		const char *qalcExe = argv[1];
+		const char *path = argv[2];
 		DIR *d;
 		struct dirent *dir;
 		d = opendir(path);
@@ -71,13 +63,17 @@ int main(int argc, char *argv[]) {
 				strcat(fullPath, "/");
 #endif
 				strcat(fullPath, filename);
-				run_unit_test(fullPath);
+				run_unit_test(qalcExe, fullPath);
 			}
 			closedir(d);
 		}
 	} else if(argc == 2) {
 		char *filename = argv[1];
-		run_unit_test(filename);
+#ifdef _WIN32
+		run_unit_test(".\\qalc.exe", filename);
+#else
+		run_unit_test("./qalc", filename);
+#endif
 	} else {
 		print_usage();
 		exit(EXIT_FAILURE);

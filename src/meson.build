@@ -34,5 +34,4 @@ test('tests', tests)
 unittest = executable('unittest',
   sources : ['unittest.cc'])
 
-# TODO unittest.cc hardcodes paths for in-source build
-#test('unit tests', unittest, workdir : meson.source_root())
+test('unit tests', unittest, args : [qalc, meson.source_root() / 'tests'])
