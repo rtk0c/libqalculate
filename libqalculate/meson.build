@@ -31,11 +31,15 @@ libqalc_sources = files([
 # Use <root>/
 # Allow includes like <libqalculate/includes.h>
 libqalc_inc = [incdir]
+libqalc_defines = []
 
-libqalc_defines = [
-  # Realistically people using meson are not going to use a gcc version without <unordered_map>, so let's just skip the feature test altogether
-  '-DHAVE_UNORDERED_MAP',
-]
+# Realistically people using meson are not going to use a gcc version without <unordered_map> -- but I guess the autotools does it
+if cpp_compiler.compiles('''
+#include <unordered_map>
+int main() {}
+''')
+  libqalc_defines += '-DHAVE_UNORDERED_MAP'
+endif
 
 # Required deps
 libqalc_deps = [thread_dep, gmp, mpfr, libxml]
@@ -44,8 +48,6 @@ if get_option('compiled_definitions')
   libqalc_sources += data_definitions_c
   libqalc_defines += '-DCOMPILED_DEFINITIONS'
 endif
-
-# TODO implement po files
 
 if libcurl.found()
   libqalc_defines += '-DHAVE_LIBCURL'
@@ -57,9 +59,14 @@ if icu_uc.found()
 endif
 if iconv.found()
   libqalc_defines += '-DHAVE_ICONV'
-  # TODO The autotools does a test for "AIX 5.1 bug"
-  #libqalc_defines += '-DICONV_CONST=const'
-  libqalc_defines += '-DICONV_CONST='
+  if c_compiler.compiles('''
+#include <iconv.h>
+int main(void) { iconv_t cd; const char **c; iconv(cd, c, NULL, NULL); return 0; }
+''')
+    libqalc_defines += '-DICONV_CONST=const'
+  else
+    libqalc_defines += '-DICONV_CONST='
+  endif
   libqalc_deps += iconv
 endif
 if gettext.found()
@@ -89,9 +96,12 @@ libqalc_lib = library('qalculate',
     f'-DPACKAGE_LOCALE_DIR="@localedir@"',
     f'-DVERSION="@ver@"',
   ],
+  # Translated from:
+  #   libqalculate_la_LDFLAGS = -version-info $(QALCULATE_CURRENT):$(QALCULATE_REVISION):$(QALCULATE_AGE) -no-undefined
   link_args: [
-    # TODO I honsetly have no idea what is this supposed to do in the autotools
-    #f'-Wl,-version-info @qalculate_major@:@qalculate_revision@:@qalculate_age@',
+    # I honsetly have no idea what is this supposed to do in the autotools
+    # -version-info is absolutely not a valid ld flag
+#    f'-Wl,-version-info @qalculate_major@:@qalculate_revision@:@qalculate_age@',
     # Ensure our shared library has no undefined symbols, as a sanity check
     '-Wl,--no-undefined',
   ],

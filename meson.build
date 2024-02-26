@@ -15,6 +15,9 @@ i18n = import('i18n')
 pymod = import('python')
 python = pymod.find_installation(required: get_option('compiled_definitions'))
 
+c_compiler = meson.get_compiler('c')
+cpp_compiler = meson.get_compiler('cpp')
+
 thread_dep = dependency('threads')
 libxml = dependency('libxml2')
 gmp = dependency('gmp')
