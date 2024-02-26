@@ -1,10 +1,3 @@
-# defs2doc_sources = files([
-#   'defs2doc.cc',
-# ])
-# defs2doc = executable('defs2doc', defs2doc_sources,
-#   # TODO curl
-#   dependencies: [libxml])
-
 qalc_defines = []
 if readline.found()
   qalc_defines += '-DHAVE_LIBREADLINE'
@@ -23,3 +16,23 @@ qalc = executable('qalc',
   ],
   dependencies : [libqalculate, libcurl, libxml, icu_uc, readline, gettext, iconv],
   install : true)
+
+defs2doc = executable('defs2doc',
+  sources : ['defs2doc.cc'],
+  # For the #include "support.h"
+  include_directories : [incdir_libqalculate],
+  dependencies: [libqalculate, libxml, libcurl, icu_uc, gettext, iconv])
+
+tests = executable('tests',
+  sources : ['test.cc'],
+  # For the #include "support.h"
+  include_directories : [incdir_libqalculate],
+  dependencies : [libqalculate, libxml, libcurl, icu_uc, gettext, iconv])
+
+test('tests', tests)
+
+unittest = executable('unittest',
+  sources : ['unittest.cc'])
+
+# TODO unittest.cc hardcodes paths for in-source build
+#test('unit tests', unittest, workdir : meson.source_root())
