@@ -79,26 +79,26 @@ endif
 
 install_headers(
   libqalc_headers,
-  subdir : 'libqalculate')
+  subdir: 'libqalculate')
 
 libqalc_lib = library('qalculate',
-  sources : libqalc_sources,
-  include_directories : libqalc_inc,
-  cpp_args : libqalc_defines + [
+  sources: libqalc_sources,
+  include_directories: libqalc_inc,
+  cpp_args: libqalc_defines + [
     f'-DPACKAGE_DATA_DIR="@datadir@"',
     f'-DPACKAGE_LOCALE_DIR="@localedir@"',
     f'-DVERSION="@ver@"',
   ],
-  link_args : [
+  link_args: [
     # TODO I honsetly have no idea what is this supposed to do in the autotools
     #f'-Wl,-version-info @qalculate_major@:@qalculate_revision@:@qalculate_age@',
     # Ensure our shared library has no undefined symbols, as a sanity check
     '-Wl,--no-undefined',
   ],
-  dependencies : libqalc_deps,
-  install : true)
+  dependencies: libqalc_deps,
+  install: true)
 
 libqalculate = declare_dependency(
-  compile_args : libqalc_defines,
-  include_directories : libqalc_inc,
-  link_with : libqalc_lib)
+  compile_args: libqalc_defines,
+  include_directories: libqalc_inc,
+  link_with: libqalc_lib)

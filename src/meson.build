@@ -8,30 +8,30 @@ qalc_sources = files([
 ])
 
 qalc = executable('qalc',
-  sources : qalc_sources,
+  sources: qalc_sources,
   # For the #include "support.h"
-  include_directories : [incdir_libqalculate],
-  cpp_args : qalc_defines + [
+  include_directories: [incdir_libqalculate],
+  cpp_args: qalc_defines + [
     '-DVERSION="@ver@"',
   ],
-  dependencies : [libqalculate, libcurl, libxml, icu_uc, readline, gettext, iconv],
-  install : true)
+  dependencies: [libqalculate, libcurl, libxml, icu_uc, readline, gettext, iconv],
+  install: true)
 
 defs2doc = executable('defs2doc',
-  sources : ['defs2doc.cc'],
+  sources: ['defs2doc.cc'],
   # For the #include "support.h"
-  include_directories : [incdir_libqalculate],
+  include_directories: [incdir_libqalculate],
   dependencies: [libqalculate, libxml, libcurl, icu_uc, gettext, iconv])
 
 tests = executable('tests',
-  sources : ['test.cc'],
+  sources: ['test.cc'],
   # For the #include "support.h"
-  include_directories : [incdir_libqalculate],
-  dependencies : [libqalculate, libxml, libcurl, icu_uc, gettext, iconv])
+  include_directories: [incdir_libqalculate],
+  dependencies: [libqalculate, libxml, libcurl, icu_uc, gettext, iconv])
 
 test('tests', tests)
 
 unittest = executable('unittest',
-  sources : ['unittest.cc'])
+  sources: ['unittest.cc'])
 
-test('unit tests', unittest, args : [qalc, meson.source_root() / 'tests'])
+test('unit tests', unittest, args: [qalc, meson.source_root() / 'tests'])

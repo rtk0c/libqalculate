@@ -12,14 +12,14 @@ foreach f : ['currencies.xml.in', 'datasets.xml.in', 'elements.xml.in',
   # NOTE: po/ is for everything in code files and only runs if use_nls=true, po-defs/ is for *.in files in data/ and is always run
   data_files += custom_target(
     f_out,
-    input : f,
-    output : f_out,
-    command : [intltool_merge, '-x', '-u', '-c', '.intltool-merge-cache', meson.source_root() / 'po-defs', '@INPUT@', '@OUTPUT@'],
-    install : installp, install_dir : install_dir)
+    input: f,
+    output: f_out,
+    command: [intltool_merge, '-x', '-u', '-c', '.intltool-merge-cache', meson.source_root() / 'po-defs', '@INPUT@', '@OUTPUT@'],
+    install: installp, install_dir: install_dir)
 endforeach
 foreach f : ['eurofxref-daily.xml', 'rates.json']
   if installp
-    install_data(f, install_dir : install_dir)
+    install_data(f, install_dir: install_dir)
   endif
   data_files += files(f)
 
@@ -38,7 +38,7 @@ if get_option('compiled_definitions')
 
   data_definitions_c = custom_target(
     'definitions.c',
-    input : [data_files],
-    output : 'definitions.c',
-    command : [python, files('meson.gen-defs.py'), '--output=@OUTPUT@', '@INPUT@'])
+    input: [data_files],
+    output: 'definitions.c',
+    command: [python, files('meson.gen-defs.py'), '--output=@OUTPUT@', '@INPUT@'])
 endif
