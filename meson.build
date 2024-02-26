@@ -31,6 +31,7 @@ localedir = get_option('localedir')
 incdir = include_directories('.')
 
 subdir('po')
+subdir('po-defs')
 subdir('data')
 subdir('libqalculate')
 subdir('src')
