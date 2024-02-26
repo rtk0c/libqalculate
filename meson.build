@@ -6,6 +6,8 @@ qalculate_major = ver_arr[0]
 qalculate_revision = ver_arr[1]
 qalculate_age = ver_arr[2]
 
+fs = import('fs')
+
 # Used for source generation
 # Rationale of not using a shell script: since we are using meson anyways, Python is going to be available on the system
 # might as well use that to get better compatibility on Windows without forcing the user to install msys2 or cygwin

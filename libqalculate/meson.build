@@ -78,6 +78,10 @@ elif get_option('with_gnuplot_call') == 'byo'
   libqalc_defines += '-DHAVE_BYO_GNUPLOT'
 endif
 
+install_headers(
+  libqalc_headers,
+  subdir : 'libqalculate')
+
 libqalc_lib = library('qalculate',
   sources : libqalc_sources,
   include_directories : libqalc_inc,
@@ -92,7 +96,8 @@ libqalc_lib = library('qalculate',
     # Ensure our shared library has no undefined symbols, as a sanity check
     '-Wl,--no-undefined',
   ],
-  dependencies : libqalc_deps)
+  dependencies : libqalc_deps,
+  install : true)
 
 libqalculate = declare_dependency(
   compile_args : libqalc_defines,

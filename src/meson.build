@@ -21,4 +21,5 @@ qalc = executable('qalc',
   cpp_args : qalc_defines + [
     '-DVERSION="@ver@"',
   ],
-  dependencies : [libqalculate, libcurl, libxml, icu_uc, readline, gettext, iconv])
+  dependencies : [libqalculate, libcurl, libxml, icu_uc, readline, gettext, iconv],
+  install : true)
