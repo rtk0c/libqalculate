@@ -34,3 +34,5 @@ subdir('po')
 subdir('data')
 subdir('libqalculate')
 subdir('src')
+
+install_man('man/qalc.1')
