@@ -23,7 +23,6 @@ ltmain.sh
 missing
 mkinstalldirs
 po-defs/.*
-po/POTFILES
 po/stamp-it
 src/.*
 src/qalc

@@ -69,7 +69,6 @@ if gettext.found()
   # This is technically the correct thing to do, even though doing so diverges from the autotool's behavior
   if get_option('use_nls')
     libqalc_defines += '-DENABLE_NLS'
-    libqalc_defines += '-DGETTEXT_PACKAGE="libqalculate"'
   endif
 endif
 if get_option('with_gnuplot_call') == 'yes'
