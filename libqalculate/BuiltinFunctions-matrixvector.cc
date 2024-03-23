@@ -630,6 +630,22 @@ int RRefFunction::calculate(MathStructure &mstruct, const MathStructure &vargs, 
 	mstruct = m;
 	return 1;
 }
+RefFunction::RefFunction() : MathFunction("ref", 1) {
+	setArgumentDefinition(1, new MatrixArgument());
+}
+int RefFunction::calculate(MathStructure &mstruct, const MathStructure &vargs, const EvaluationOptions &eo) {
+	// TODO
+	return 1;
+}
+GaussianElinimationFunction::GaussianElinimationFunction() : MathFunction("gaussElim", 1) {
+	setArgumentDefinition(1, new MatrixArgument());
+}
+int GaussianElinimationFunction::calculate(MathStructure &mstruct, const MathStructure &vargs, const EvaluationOptions &eo) {
+	MathStructure m(vargs[0]);
+	m.gaussianElimination(eo, false);
+	mstruct = m;
+	return 1;
+}
 MatrixRankFunction::MatrixRankFunction() : MathFunction("rk", 1) {
 	setArgumentDefinition(1, new MatrixArgument());
 }

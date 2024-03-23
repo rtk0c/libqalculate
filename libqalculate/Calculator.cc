@@ -1648,6 +1648,8 @@ void Calculator::addBuiltinFunctions() {
 	f_magnitude = addFunction(new MagnitudeFunction());
 	f_entrywise = addFunction(new EntrywiseFunction());
 	addFunction(new RRefFunction());
+	addFunction(new RefFunction());
+	addFunction(new GaussianElinimationFunction());
 	addFunction(new MatrixRankFunction());
 	priv->f_dot = addFunction(new DotProductFunction());
 	priv->f_times = addFunction(new EntrywiseMultiplicationFunction());

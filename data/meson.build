@@ -8,8 +8,6 @@ foreach f : ['currencies.xml.in', 'datasets.xml.in', 'elements.xml.in',
              'functions.xml.in', 'planets.xml.in', 'prefixes.xml.in',
              'units.xml.in', 'variables.xml.in']
   f_out = f.replace('.in', '')
-  # TODO gettext po update and pot generate targets for stuff under po-defs/
-  # NOTE: po/ is for everything in code files and only runs if use_nls=true, po-defs/ is for *.in files in data/ and is always run
   data_files += custom_target(
     f_out,
     input: f,
