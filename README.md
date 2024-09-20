@@ -1,3 +1,7 @@
+# Divergent Features
+* meson instead of autotools
+* A few new custom, linear algebra related functions
+
 # libqalculate
 Qalculate! library and CLI
 
@@ -19,11 +23,9 @@ For Linux distributions which provide separate development packages, these must 
 Instructions and download links for installers, binaries packages, and the source code of released versions of Qalculate! are available at https://qalculate.github.io/downloads.html.
 
 In a terminal window in the top source code directory run
-* `./autogen.sh` *(not required if using a release source tarball, only if using the git version)*
-* `./configure`
-* `make`
-* `make install` *(as root, e.g. `sudo make install`)*
-* `ldconfig` *(if necessary, as root)*
+* `meson configure builddir/`
+* `meson compile -C builddir`
+* `meson install -C builddir`
 
 If libqalculate is installed in /usr/local (default) you may need to add /usr/local/lib to the library path of the system (add /usr/local/lib to a file under /etc/ld.so.conf.d/ and run ldconfig).
 
